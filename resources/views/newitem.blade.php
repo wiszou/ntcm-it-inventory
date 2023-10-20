@@ -233,8 +233,12 @@
                             </div>
 
 
-                            <div class="mt-3 col-span-6 sm:col-span-6 text-medium text-center font-medium border-dashed border-t-2 border-gray-300 pt-4" id="spacer" hidden>
-                                Item Specification </div>
+                            <div class="col-span-6 sm:col-span-3">
+                            </div>
+
+
+                            <div class="mt-3 col-span-6 sm:col-span-6 text-medium text-center font-medium border-dashed border-t-2 border-gray-300 pt-4 mb-5" id="spacer" hidden>
+                                Item Specification</div>
 
                             <div class="col-span-6 sm:col-span-3" id="cpuInput" hidden>
                                 <label for="item-serial" class="block mb-2 text-sm font-medium text-gray-900">CPU</label>
@@ -338,6 +342,7 @@
                         gpuInput.removeAttribute('hidden');
                         ramInput.removeAttribute('hidden');
                         storageInput.removeAttribute('hidden');
+                        spacer.removeAttribute('hidden');
                     } else {
                         cpuInput.setAttribute('hidden', true);
                         gpuInput.setAttribute('hidden', true);
