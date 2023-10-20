@@ -141,25 +141,29 @@ input[disabled] {
                     </thead>
                     <tbody id="suppliers">
                         @foreach ($details as $item)
+                        @if ($item->date_end === null)
+                        <script>
+                        console.log("Null");
+                        </script>
+                        @else
                         @php
-                        try {
                         $dateEnd = \Carbon\Carbon::createFromFormat('Y-m-d', $item->date_end, 'Asia/Manila');
-                        // Rest of your code for date comparisons
-                        } catch (Exception $e) {
-                        // Handle the exception (e.g., log it, skip the current item, etc.)
-                        }
-                        @endphp
+                        $currentDate = now('Asia/Manila')->startOfDay();
+                        $oneMonthLater = $currentDate->copy()->addMonth();
+                        $oneMonthAgo = $currentDate->copy()->subMonth();
 
-                        @if (isset($dateEnd))
-                        <tr onclick="redirectToEdit('{{ $item->item_id }}')" class="cursor-pointer">
-                            <td class="text-center">{{ $item->item_id }}</td>
-                            <td class="text-center">{{ $item->model }}</td>
-                            <td class="text-center">{{ $item->date_end }}</td>
-                        </tr>
-                        @endif
-                        @php
-                        @endphp
-                        @endforeach
+                        if ($dateEnd->isSameDay($currentDate) || $dateEnd <= $currentDate || ($dateEnd> $oneMonthAgo &&
+                            $dateEnd < $oneMonthLater)) { @endphp <tr onclick="redirectToEdit('{{ $item->item_id }}')"
+                                class="cursor-pointer">
+                                <td class="text-center">{{ $item->item_id }}</td>
+                                <td class="text-center">{{ $item->model }}</td>
+                                <td class="text-center">{{ $item->date_end }}</td>
+                                </tr>
+                                @php
+                                }
+                                @endphp
+                                @endif
+                                @endforeach
                     </tbody>
                 </table>
             </div>
@@ -276,8 +280,8 @@ input[disabled] {
     <!--Datatables -->
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-    
-    
+
+
     <script>
     $(document).ready(function() {
         var table = $('#retire').DataTable({
